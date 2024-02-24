@@ -5,15 +5,14 @@ Maximo Automation Testing Tool is a java package used to test maximo web applica
 ## Libraries & Tools
 - Selenium WebDriver
 - Chrome Driver
-
+#### NOTE : Chrome driver version MUST match chrome browser version   &   Selenium version MUST be compatible with Java version.
 
 ## Package Breakdown
 This package is made of the following classes & files with their listed functionality.
 
 
 #### Maximo_Automation.java
-> This is the main method file where the automation test process is designed and executed.
-<br>
+> This is the main method file where the automation test process is designed and executed.<br>
 > Note : Every process MUST start by creating a Process Monitor and end by calling the "generateProcessReport()" method.
 
 
