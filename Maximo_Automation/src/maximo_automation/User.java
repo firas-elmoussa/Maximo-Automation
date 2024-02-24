@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -63,6 +64,7 @@ public class User {
     
     //CREATE A SCHEDULED EXECUTER WITH ONE THREAD
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    ScheduledFuture<?> ScheduledSystemErrorCheck ; 
     
     //PROPERTIES TO FETCH CONFIG PROP
     Properties properties = new Properties();
@@ -83,7 +85,7 @@ public class User {
         this.password = properties.getProperty("password");
         
         // SCHEDULE TASK
-        executorService.scheduleAtFixedRate(() -> {
+        ScheduledSystemErrorCheck = executorService.scheduleAtFixedRate(() -> {
             // CHECK FOR SYSTEM ERRORS
             checkForSystemError(driver);
         }, 0, 60, TimeUnit.SECONDS); //TASK WILL RUN EVERY 60s
@@ -160,6 +162,9 @@ public class User {
                     loggedIn = false;
                     driver.quit(); 
                     System.out.println("Logged out Successfully");
+                    //CLOSE SIDE TASK CHECKING FOR SYSTEM ERRORS
+                    ScheduledSystemErrorCheck.cancel(true);
+                    executorService.shutdown();
                 } 
                 
             }
